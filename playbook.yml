@@ -1,0 +1,17 @@
+- name: Perhaps
+  hosts: all
+    #become: true
+    #become_user: root
+
+  environment:
+    PERHAPS: "Perhaps"
+  tasks:
+    - name: Prepare ansible home tmp folder
+      ansible.builtin.shell:
+        cmd: rm -r ~/.ansible
+    - name: Simple Debug
+      ansible.builtin.debug:
+        msg: "{{ ansible_env.PERHAPS }}"
+    - name: Simple Debug 2
+      ansible.builtin.debug:
+        msg: "{{ lookup('env', 'PERHAPS') }}"
