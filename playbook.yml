@@ -8,9 +8,6 @@
   environment:
     EXAMPLE_KEY: "EXAMPLE_KEY from this Ansible Playbook"
   tasks:
-    - name: Prepare ansible home tmp folder
-      ansible.builtin.shell:
-        cmd: rm -r ~/.ansible
     - name: Simple Debug
       ansible.builtin.debug:
         msg: "{{ ansible_env.EXAMPLE_KEY }}"
