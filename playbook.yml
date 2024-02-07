@@ -1,9 +1,8 @@
 - name: Packer Ansible Test
   hosts: all
   remote_user: ubuntu
-  # Commented these out because gather_facts try to remove the non-existent /root/.ansible and it causes a fatal error during its cleanup
-  #become: true
-  #become_user: root
+  become: true
+  become_user: root
 
   environment:
     EXAMPLE_KEY: "EXAMPLE_KEY from this Ansible Playbook"
