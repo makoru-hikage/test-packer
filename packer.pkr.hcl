@@ -23,6 +23,11 @@ variable "ansible_host" {
   default = "default"
 }
 
+variable "docker_username" {
+  type    = string
+  default = ""
+}
+
 variable "docker_key" {
   type    = string
   default = ""
@@ -54,9 +59,17 @@ build {
     ansible_env_vars = ["EXAMPLE_KEY=${var.example_key}"]
   }
 
-  post-processor "docker-tag" {
-    repository = "test-packer"
-    tags = ["qa"]
-  }
+  post-processors {
+    post-processor "docker-tag"  {
+      repository = "makoruhikage/test-packer-ansible"
+      tags = ["qa"]
+    }
+
+    post-processor "docker-push" {
+      login = true
+      login_username = "${var.docker_username}"
+      login_password = "${var.docker_key}"
+    }
+  } 
 }
 
