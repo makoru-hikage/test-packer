@@ -1,7 +1,9 @@
-- name: Perhaps
+- name: Packer Ansible Test
   hosts: all
-    #become: true
-    #become_user: root
+  remote_user: ubuntu
+  # Commented these out because gather_facts try to remove the non-existent /root/.ansible and it causes a fatal error during its cleanup
+  #become: true
+  #become_user: root
 
   environment:
     PERHAPS: "Perhaps"
