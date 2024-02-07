@@ -1,0 +1,53 @@
+name: Packer and Ansible Demo
+run-name: Build Packer for ${{ github.event.inputs.environment }} by @${{ github.actor }}
+on:  
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Select the environment
+        type: environment
+      reference:
+        description: The reference branch/commit to checkout
+        type: string
+        default: master
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+env:
+  PACKER_VERSION: "latest"
+  ANSIBLE_VERBOSITY_LEVEL: ""
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.reference }}
+
+      - name: Setup `packer`
+        uses: hashicorp/setup-packer@main
+        id: setup
+        with:
+          version: ${{ env.PACKER_VERSION }}
+
+      - name: Run `packer init`
+        id: init
+        run: "packer init ."
+
+      - name: Run `packer validate`
+        id: validate
+        run: "packer validate ."
+
+      - name: Build Artifact
+        run: packer build .
+        env:
+          PKR_VAR_example_key: {{ secrets.EXAMPLE_KEY }}
+          PKR_VAR_docker_username: {{ secrets.DOCKER_USERNAME }}
+          PKR_VAR_docker_key: {{ secrets.DOCKER_KEY }}
+          PKR_VAR_ansible_verbosity: {{ vars.ANSIBLE_VERBOSITY_LEVEL }}
