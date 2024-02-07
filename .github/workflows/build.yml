@@ -9,7 +9,7 @@ on:
       reference:
         description: The reference branch/commit to checkout
         type: string
-        default: master
+        default: main
 
 permissions:
   id-token: write
