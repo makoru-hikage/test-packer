@@ -35,7 +35,7 @@ variable "docker_key" {
 
 variable "ansible_verbosity" {
   type    = string
-  default = ""
+  default = null 
 }
 
 source "docker" "ubuntu" {
@@ -55,9 +55,9 @@ build {
     playbook_file   = "./playbook.yml"
     user = "ubuntu"
     extra_arguments = [
+      "${var.ansible_verbosity}",
       "--extra-vars",
       "ansible_host=${var.ansible_host} ansible_connection=docker",
-      "${var.ansible_verbosity}",
     ]
     ansible_env_vars = ["EXAMPLE_KEY=${var.example_key}"]
   }
