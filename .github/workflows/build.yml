@@ -18,7 +18,7 @@ permissions:
 
 env:
   PACKER_VERSION: "latest"
-  ANSIBLE_VERBOSITY_LEVEL: ""
+  ANSIBLE_VERBOSITY: ""
 
 jobs:
   apply:
@@ -50,4 +50,4 @@ jobs:
           PKR_VAR_example_key: ${{ secrets.EXAMPLE_KEY }}
           PKR_VAR_docker_username: ${{ secrets.DOCKER_USERNAME }}
           PKR_VAR_docker_key: ${{ secrets.DOCKER_KEY }}
-          PKR_VAR_ansible_verbosity: ${{ env.ANSIBLE_VERBOSITY }}
+          PKR_VAR_ansible_verbosity: ${{ var.ANSIBLE_VERBOSITY }}
