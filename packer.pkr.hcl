@@ -13,11 +13,25 @@ packer {
   }
 }
 
+variable "example_key" {
+  type    = string
+  default = ""
+}
+
+variable "ansible_host" {
+  type    = string
+  default = "default"
+}
+
+variable "docker_key" {
+  type    = string
+  default = ""
+}
+
 source "docker" "ubuntu" {
-  image  = "ubuntu-python:jammy"
-  pull = false
+  image  = "makoruhikage/ubuntu-python-example:jammy"
   commit = true
-  run_command = ["-d", "-i", "-t", "--entrypoint=/bin/sh", "--name", "default", "--", "{{.Image}}"]
+  run_command = ["-d", "-i", "-t", "--entrypoint=/bin/sh", "--name", "${var.ansible_host}", "--", "{{.Image}}"]
 }
 
 build {
@@ -34,10 +48,10 @@ build {
     user = "ubuntu"
     extra_arguments = [
       "--extra-vars",
-      "ansible_host=default ansible_connection=docker",
+      "ansible_host=${var.ansible_host} ansible_connection=docker",
       # "-vvv",
     ]
-    ansible_env_vars = ["PERHAPS=Marahil"]
+    ansible_env_vars = ["EXAMPLE_KEY=${var.example_key}"]
   }
 
   post-processor "docker-tag" {
