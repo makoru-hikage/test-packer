@@ -47,7 +47,7 @@ jobs:
       - name: Build Artifact
         run: packer build .
         env:
-          PKR_VAR_example_key: "EXAMPLE_KEY from fake Github Secrets passed by Packer to Ansible"
+          PKR_VAR_example_key: ${{ secrets.EXAMPLE_KEY }}
           PKR_VAR_docker_username: ${{ secrets.DOCKER_USERNAME }}
           PKR_VAR_docker_key: ${{ secrets.DOCKER_KEY }}
           PKR_VAR_ansible_verbosity: ${{ vars.ANSIBLE_VERBOSITY }}
