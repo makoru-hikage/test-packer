@@ -7,9 +7,9 @@
   environment:
     EXAMPLE_KEY: "EXAMPLE_KEY from this Ansible Playbook"
   tasks:
-    - name: Simple Debug
+    - name: Print EXAMPLE_KEY from Ansible environment
       ansible.builtin.debug:
         msg: "{{ ansible_env.EXAMPLE_KEY }}"
-    - name: Simple Debug 2
+    - name: Print EXAMPLE_KEY from Packer environment (ansible_env_vars)
       ansible.builtin.debug:
         msg: "{{ lookup('env', 'EXAMPLE_KEY') }}"
