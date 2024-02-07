@@ -33,6 +33,11 @@ variable "docker_key" {
   default = ""
 }
 
+variable "ansible_verbosity" {
+  type    = string
+  default = ""
+}
+
 source "docker" "ubuntu" {
   image  = "makoruhikage/ubuntu-python-example:jammy"
   commit = true
@@ -45,16 +50,14 @@ build {
     "source.docker.ubuntu"
   ]
 
-
   provisioner "ansible" {
-    # extra_arguments = ["-vvvv"]
     use_proxy = false
     playbook_file   = "./playbook.yml"
     user = "ubuntu"
     extra_arguments = [
       "--extra-vars",
       "ansible_host=${var.ansible_host} ansible_connection=docker",
-      # "-vvv",
+      "${var.ansible_verbosity}",
     ]
     ansible_env_vars = ["EXAMPLE_KEY=${var.example_key}"]
   }
