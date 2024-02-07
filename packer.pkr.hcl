@@ -35,7 +35,7 @@ variable "docker_key" {
 
 variable "ansible_verbosity" {
   type    = string
-  default = null 
+  default = "-v" 
 }
 
 source "docker" "ubuntu" {
