@@ -6,14 +6,14 @@
   #become_user: root
 
   environment:
-    PERHAPS: "Perhaps"
+    EXAMPLE_KEY: "EXAMPLE_KEY from this Ansible Playbook"
   tasks:
     - name: Prepare ansible home tmp folder
       ansible.builtin.shell:
         cmd: rm -r ~/.ansible
     - name: Simple Debug
       ansible.builtin.debug:
-        msg: "{{ ansible_env.PERHAPS }}"
+        msg: "{{ ansible_env.EXAMPLE_KEY }}"
     - name: Simple Debug 2
       ansible.builtin.debug:
-        msg: "{{ lookup('env', 'PERHAPS') }}"
+        msg: "{{ lookup('env', 'EXAMPLE_KEY') }}"
